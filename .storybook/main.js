@@ -28,7 +28,6 @@ module.exports = {
         ...storybookWebpackConfig.module.rules,
       ],
     },
-    plugins: [...devWebpackConfig.plugins, ...storybookWebpackConfig.plugins],
     resolve: {
       ...storybookWebpackConfig.resolve,
       alias: {
