@@ -5,6 +5,19 @@ name: Node
 on: [pull_request]
 
 jobs:
+  build-master:
+    runs-on: ubuntu-latest
+    name: Get master bundle size
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          ref: master
+      - name: Install Dependencies
+        run: npm ci
+      - name: Build
+        run: npm run build
+
+
   build:
     runs-on: ubuntu-latest
     name: Build and Test

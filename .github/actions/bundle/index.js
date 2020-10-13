@@ -11,8 +11,8 @@ async function buildBundleReport() {
 
     const builtBundlesFeedback = bundles.reduce((previousbundleText, bundle) => {
       const bundleSize = Math.round((bundle.parsedSize / 1024) * 100) / 100;
-      return `${previousbundleText} ${bundle.label}: ${bundleSize}KB\n`;
-    }, '');
+      return `${previousbundleText} |${bundle.label}|${bundleSize}KB|<pre lang="diff">+hello</pre>|\n`;
+    }, '|Bundle|Size|Increase/Decrease|\n|---|---|---|\n');
 
     core.setOutput("bundle_size", builtBundlesFeedback);
   } catch (error) {
