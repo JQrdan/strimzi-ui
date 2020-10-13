@@ -5,31 +5,14 @@
 const core = require("@actions/core");
 const fs = require("fs");
 
-const builtFiles = [{
-  fileName: 'main.bundle.js',
-  humanReadableName: 'Strimzi UI code bundle size:'
-}];
-// }, {
-//   fileName: 'libs.bundle.js',
-//   humanReadableName: 'Dependancy UI code bundle size:'
-// }, {
-//   fileName: 'styles.bundle.css',
-//   humanReadableName: 'Kafka Starter App css bundle size:'
-// }];
-
-async function calculateBundle() {
+async function buildBundleReport() {
   try {
+    const bundles = JSON.parse(fs.readFileSync('./generated/bundle-analyser/report.json'));
 
-    const builtBundlesFeedback = builtFiles.reduce((previousBundleText, {fileName, humanReadableName}) => {
-      const fileSize =
-      Math.round(
-        (fs.statSync(`./dist/${fileName}`)["size"] /
-          1024.0) *
-          100
-      ) / 100;
-      return `${previousBundleText} ${humanReadableName} ${fileSize}KB\n`;
+    const builtBundlesFeedback = bundles.reduce((previousbundleText, bundle) => {
+      const bundleSize = Math.round((bundle.parsedSize / 1024) * 100) / 100;
+      return `${previousbundleText} ${bundle.label}: ${bundleSize}KB\n`;
     }, '');
-
 
     core.setOutput("bundle_size", builtBundlesFeedback);
   } catch (error) {
@@ -37,4 +20,4 @@ async function calculateBundle() {
   }
 }
 
-calculateBundle();
+buildBundleReport();
