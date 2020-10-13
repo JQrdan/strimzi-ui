@@ -14,6 +14,9 @@ async function buildBundleReport() {
       return `${previousbundleText} |${bundle.label}|${bundleSize}KB|<pre lang="diff">+hello</pre>|\n`;
     }, '|Bundle|Size|Increase/Decrease|\n|---|---|---|\n');
 
+    let report = core.getInput("master_report");
+    console.dir(report);
+
     core.setOutput("bundle_size", builtBundlesFeedback);
   } catch (error) {
     core.setFailed(error.message);

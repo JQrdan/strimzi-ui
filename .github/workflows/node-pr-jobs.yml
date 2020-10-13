@@ -16,11 +16,13 @@ jobs:
         run: npm ci
       - name: Build
         run: npm run build
+      - name: Set report output
+        run: echo "::set-output name=master_report::$(cat generated/bundle-analyser/report.json)"
 
-
-  build:
+  build-current:
     runs-on: ubuntu-latest
     name: Build and Test
+    needs: build-master
     steps:
       - uses: actions/checkout@v2
       - name: Use Node.js 12.x
